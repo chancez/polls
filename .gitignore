@@ -1,0 +1,7 @@
+*.pyc
+*.db
+*.swp
+venv/
+settings.py*
+!settings.py.dist
+

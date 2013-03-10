@@ -5,11 +5,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', 'lugpolls.views.home', name='home'),
+    url(r'^login/?$', 'django.contrib.auth.views.login', name="login"),
+    url(r'^logout/?$', 'django.contrib.auth.views.logout', name="logout"),
     url(r'^polls/', include('polls.urls', namespace="polls")),
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    #url(r'^accounts/profile/', 'user.views.profile', name='auth_profile'),
+    url(r'^accounts/profile/', 'lugpolls.views.profile', name='profile'),
 )
 
 # This serves up staticfiles at STATIC_URL when debug=True

@@ -6,8 +6,12 @@
   <div id="main" class="container">
     <h1>Welcome to the OSULUG voting site.</h1>
     <p>This is where the OSU LUG will conduct formal voting/elections</p>
-    <p><a class="btn btn-primary btn-large" href="{% url "polls:index" %}">View Polls</a>
-    <a class="btn btn-primary btn-large" href="{% url "login" %}">Login</a></p>
+    <p>
+      <a class="btn btn-primary btn-large" href="{% url "polls:index" %}">View Polls</a>
+      {% if not user.is_authenticated %}
+        <a class="btn btn-primary btn-large" href="{% url "login" %}">Login</a>
+      {% endif %}
+    </p>
   </div>
 </div>
 

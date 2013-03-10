@@ -2,5 +2,18 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<h2>{{ user }}</h2>
+
+<div id="content">
+{% for vote in votes %}
+  <div class="poll span3">
+      <div class="question">Question: {{vote.poll.question}}</div>
+      <div class="choices">Choices: {{vote.poll.choice_set.all|join:", "}}</div>
+      <div class="choice">You voted: <b>{{vote}}</b></div>
+  </div>
+{% empty %}
+  <p>You have note voted in any polls.</p>
+{% endfor %}
+</div>
 
 {% endblock %}

@@ -2,6 +2,8 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 class Poll(models.Model):
     question = models.CharField(max_length=200)
@@ -19,7 +21,18 @@ class Poll(models.Model):
 class Choice(models.Model):
     poll = models.ForeignKey(Poll)
     choice_text = models.CharField(max_length=200, blank=False)
-    votes = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.choice_text
+
+
+class Vote(models.Model):
+    voter = models.ForeignKey(User)
+    poll = models.ForeignKey(Poll)
+    choice = models.ForeignKey(Choice)
+
+    class Meta:
+        unique_together = ['poll', 'voter']
+
+    def __unicode__(self):
+        return self.choice.choice_text

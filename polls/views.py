@@ -52,10 +52,11 @@ class PollDetailView(DetailView):
         try:
             vote = Vote.objects.get(voter=user.pk, poll=self.kwargs['pk'])
         except Vote.DoesNotExist:
-            return super(PollDetailView, self).dispatch(request, *args,
-                                                        **kwargs)
+            pass
         else:
-            return redirect(reverse('polls:results', args=(vote.poll.id,)))
+            self.template_name = 'polls/results.html'
+        return super(PollDetailView, self).dispatch(request, vote=vote,
+                                                    *args, **kwargs)
 
 
 class PollListView(ListView):

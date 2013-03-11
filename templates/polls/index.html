@@ -14,6 +14,8 @@
           </tr>
         {% endfor %}
       </table>
+    {% else %}
+      <p>No new polls</p>
     {% endif %}
   </div>
   <div class="span6">
@@ -27,10 +29,9 @@
           </tr>
         {% endfor %}
       </table>
+    {% elif not poll_recent %}
+      <p>No other polls are available</p>
     {% endif %}
   </div>
-  {% if not poll_list %}
-    No polls are available.
-  {% endif %}
 </div>
 {% endblock %}

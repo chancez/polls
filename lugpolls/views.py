@@ -10,5 +10,7 @@ def home(request):
 
 @login_required()
 def profile(request):
-    votes = Vote.objects.filter(voter=request.user).prefetch_related()
+    votes = Vote.objects.filter(voter=request.user) \
+                        .prefetch_related() \
+                        .order_by('-vote_date')
     return render(request, 'users/profile.html', {'votes': votes})

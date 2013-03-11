@@ -11,7 +11,8 @@
   {% endif %}
     <div class="poll span4">
         <div class="question">Question: {{ vote.poll.question }}</div>
-        <div class="pub_date">Pub Date: {{ vote.poll.pub_date|date:"M d, Y" }}</div>
+        <div class="pub_date">Published: {{ vote.poll.pub_date|date:"M d, Y" }}</div>
+        <div class="vote_date"> Date Voted: {{ vote.vote_date|date:"M d, Y" }}</div>
         <div class="choices">Choices: {{ vote.poll.choice_set.all|join:", " }}</div>
         <div class="choice">You voted: <b>{{ vote }}</b></div>
     </div>
@@ -19,7 +20,7 @@
     </div><!--/row-->
   {% endif %}
 {% empty %}
-  <p>You have note voted in any polls.</p>
+  <p>You have not voted in any polls.</p>
 {% endfor %}
 </div>
 

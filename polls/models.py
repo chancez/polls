@@ -34,9 +34,11 @@ class Vote(models.Model):
     voter = models.ForeignKey(User)
     poll = models.ForeignKey(Poll)
     choice = models.ForeignKey(Choice)
+    vote_date = models.DateTimeField('date voted', default=timezone.now())
 
     class Meta:
         unique_together = ['poll', 'voter']
+        ordering = ['-vote_date']
 
     def __unicode__(self):
         return self.choice.choice_text

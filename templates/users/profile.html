@@ -4,13 +4,19 @@
 {% block content %}
 <h2>{{ user }}</h2>
 
-<div id="content">
+<div id="content container">
 {% for vote in votes %}
-  <div class="poll span3">
-      <div class="question">Question: {{vote.poll.question}}</div>
-      <div class="choices">Choices: {{vote.poll.choice_set.all|join:", "}}</div>
-      <div class="choice">You voted: <b>{{vote}}</b></div>
-  </div>
+  {% if forloop.counter0|divisibleby:"3" %}
+    <div class="row">
+  {% endif %}
+    <div class="poll span4">
+        <div class="question">Question: {{vote.poll.question}}</div>
+        <div class="choices">Choices: {{vote.poll.choice_set.all|join:", "}}</div>
+        <div class="choice">You voted: <b>{{vote}}</b></div>
+    </div>
+  {% if forloop.last or forloop.counter|divisibleby:"3" %}
+    </div><!--/row-->
+  {% endif %}
 {% empty %}
   <p>You have note voted in any polls.</p>
 {% endfor %}

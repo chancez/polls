@@ -5,23 +5,28 @@
   <div class="span6 recent">
     <h1 class="title">Recent Polls</h1>
     <p class="desc">Polls published in the last day.</p>
-
     {% if polls_recent %}
-        <ul>
+      <table>
         {% for poll in polls_recent %}
-            <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+          <tr>
+            <td>{{ poll.pub_date|date:"M d" }}: </td>
+            <td><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></td>
+          </tr>
         {% endfor %}
-        </ul>
+      </table>
     {% endif %}
   </div>
   <div class="span6">
     <h2>Other Polls</h2>
     {% if polls_rest %}
-        <ul>
+      <table>
         {% for poll in polls_rest %}
-            <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+          <tr>
+            <td>{{ poll.pub_date|date:"M d" }}: </td>
+            <td><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></td>
+          </tr>
         {% endfor %}
-        </ul>
+      </table>
     {% endif %}
   </div>
   {% if not poll_list %}

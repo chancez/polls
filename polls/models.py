@@ -9,6 +9,10 @@ class Poll(models.Model):
     question = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', default=timezone.now())
 
+    class Meta:
+        get_latest_by = 'pub_date'
+        ordering = ['-pub_date']
+
     def was_published_recently(self):
         """Returns whether or not the poll was published in the last day"""
         now = timezone.now()

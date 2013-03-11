@@ -11,3 +11,10 @@
 .poll div {
   text-indent: 15px;
 }
+
+.polls .title {
+  margin-bottom: 1px;
+}
+.polls .desc {
+  font-size: 12px;
+}

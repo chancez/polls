@@ -1,15 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Polls</h1>
-  {% if latest_poll_list %}
-      <ul>
-      {% for poll in latest_poll_list %}
-          <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
-      {% endfor %}
-      </ul>
-  {% else %}
-      <p>No polls are available.</p>
-  {% endif %}
+<div class="polls row">
+  <div class="span6 recent">
+    <h1 class="title">Recent Polls</h1>
+    <p class="desc">Polls published in the last day.</p>
 
+    {% if polls_recent %}
+        <ul>
+        {% for poll in polls_recent %}
+            <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+  <div class="span6">
+    <h2>Other Polls</h2>
+    {% if polls_rest %}
+        <ul>
+        {% for poll in polls_rest %}
+            <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+  {% if not poll_list %}
+    No polls are available.
+  {% endif %}
+</div>
 {% endblock %}

@@ -68,7 +68,7 @@ def create_choice(Poll, n=1, *args, **kwargs):
     for i in xrange(1, n+1):
         if "TestChoice" in text:
             text += str(i)
-        Choice.objects.create(choice_text=text, poll=Poll)
+        Poll.choice_set.create(choice_text=text, poll=Poll)
 
 
 class PollIndexViewTests(TestCase):
@@ -79,7 +79,7 @@ class PollIndexViewTests(TestCase):
         response = self.client.get(reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No polls are available.")
-        self.assertQuerysetEqual(response.context['latest_poll_list'], [])
+        self.assertQuerysetEqual(response.context['poll_list'], [])
 
     def test_index_view_with_past_poll(self):
         """
@@ -89,7 +89,7 @@ class PollIndexViewTests(TestCase):
         create_past_poll()
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
-            response.context['latest_poll_list'],
+            response.context['poll_list'],
             ['<Poll: Past Poll>']
         )
 
@@ -97,14 +97,14 @@ class PollIndexViewTests(TestCase):
         create_future_poll()
         response = self.client.get(reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['latest_poll_list'], [])
+        self.assertQuerysetEqual(response.context['poll_list'], [])
 
     def test_index_view_with_future_poll_and_past_poll(self):
         create_future_poll()
         create_past_poll()
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
-            response.context['latest_poll_list'],
+            response.context['poll_list'],
             ['<Poll: Past Poll>']
         )
 
@@ -113,7 +113,7 @@ class PollIndexViewTests(TestCase):
         create_poll(question='Past Poll 2', days=-5)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
-            response.context['latest_poll_list'],
+            response.context['poll_list'],
             # Order matters
             ['<Poll: Past Poll 2>', '<Poll: Past Poll 1>']
         )
@@ -123,7 +123,7 @@ class PollIndexViewTests(TestCase):
         poll = create_past_poll(choices=False)
         response = self.client.get(reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['latest_poll_list'], [])
+        self.assertQuerysetEqual(response.context['poll_list'], [])
 
 
 class PollDetailViewTests(TestCase):

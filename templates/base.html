@@ -22,26 +22,24 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="brand" href="{% url 'polls:index' %}">Polls</a>
-          <div class="nav-collapse collapse">
-            {% if user.is_authenticated %}
-              <p class="navbar-text pull-right">
-                Logged in as <a href="{% url "profile" %}" class="navbar-link">{{user.username}}</a>
-              </p>
-            {% else %}
-            <form method="POST" class="navbar-form pull-right" action="{% url 'login' %}">
-              {% csrf_token %}
+          <ul class="nav pull-right">
+          {% if user.is_authenticated %}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Logged in as {{ user.username }}</a>
+              <ul class="dropdown-menu" role="menu" aria-laballedby="dLabel">
+                <li><a href="{% url "profile" %}" class="navbar-link">Profile</a></li>
+                <li><a href="{% url "logout" %}">Logout</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <form method="POST" class="navbar-form pull-right" action="{% url 'login' %}">{% csrf_token %}
               <input class="span2" type="text" name="username" placeholder="Username">
               <input class="span2" type="password" name="password" placeholder="Password">
               <button type="submit" class="btn">Sign In</button>
             </form>
-            {% endif %}
-          </div><!--/.nav-collapse -->
+          {% endif %}
+          </ul>
         </div>
       </div>
     </div>

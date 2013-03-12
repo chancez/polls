@@ -19,21 +19,21 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{% url 'polls:index' %}">Polls</a>
-          <ul class="nav pull-right">
+          <ul class="nav navbar pull-right">
           {% if user.is_authenticated %}
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Logged in as {{ user.username }}</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }}&nbsp;<b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" aria-laballedby="dLabel">
-                <li><a href="{% url "profile" %}" class="navbar-link">Profile</a></li>
-                <li><a href="{% url "logout" %}">Logout</a></li>
+                <li><a href="{% url "profile" %}">Profile</a></li>
+                <li><a href="{% url "auth_logout" %}">Logout</a></li>
               </ul>
             </li>
           {% else %}
-            <form method="POST" class="navbar-form pull-right" action="{% url 'login' %}">{% csrf_token %}
+            <form method="POST" class="navbar-form pull-right" action="{% url 'auth_login' %}">{% csrf_token %}
               <input class="span2" type="text" name="username" placeholder="Username">
               <input class="span2" type="password" name="password" placeholder="Password">
               <button type="submit" class="btn">Sign In</button>

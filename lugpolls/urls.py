@@ -6,8 +6,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'lugpolls.views.home', name='home'),
-    url(r'^login/?$', 'django.contrib.auth.views.login', name="login"),
-    url(r'^logout/?$', 'django.contrib.auth.views.logout', name="logout"),
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.simple.urls')),

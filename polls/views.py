@@ -18,11 +18,13 @@ def vote(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     user = request.user
     try:
-        vote = Vote.objects.get(voter=user.pk, poll=poll.id)
+        Vote.objects.get(voter=user, poll=poll.id)
+        message = "You've already voted on this!"
+        messages.error(request, message)
     except Vote.DoesNotExist:
         try:
             choice = Choice.objects.get(pk=request.POST['choice'])
-            Vote.objects.create(poll=poll, choice=choice, user=user.pk)
+            Vote.objects.create(poll=poll, choice=choice, voter=user)
         except (KeyError, Choice.DoesNotExist):
             # Redisplay the poll voting form.
             message = "You didn't select a choice."
@@ -30,9 +32,6 @@ def vote(request, poll_id):
             return render(request, 'polls/detail.html', {
                 'poll': poll
             })
-    if not vote:
-        message = "You've already voted on this!"
-        messages.error(request, message)
     return HttpResponseRedirect(reverse('polls:results', args=(poll.id,)))
 
 
@@ -50,7 +49,7 @@ class PollDetailView(DetailView):
         user = request.user
         vote = None
         try:
-            vote = Vote.objects.get(voter=user.pk, poll=self.kwargs['pk'])
+            vote = Vote.objects.get(voter=user, poll=self.kwargs['pk'])
         except Vote.DoesNotExist:
             pass
         else:

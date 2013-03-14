@@ -10,6 +10,9 @@
       <a class="btn btn-primary btn-large" href="{% url "polls:index" %}">View Polls</a>
       {% if not user.is_authenticated %}
         <a class="btn btn-primary btn-large" href="{% url "auth_login" %}">Login</a>
+        <p>
+          <small><a href="{% url "registration_register" %}">Registration</a></small>
+        </p>
       {% endif %}
     </p>
   </div>
